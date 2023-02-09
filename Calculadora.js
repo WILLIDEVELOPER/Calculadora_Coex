@@ -1,95 +1,88 @@
-function operaciones(op) {
-  var ops = {
-    sumar: function sumarNumeros(n1, n2) {
-      return parseInt(n1) + parseInt(n2);
-    },
+let Historial=[]
 
-    restar: function restarNumeros(n1, n2) {
-      return parseInt(n1) - parseInt(n2);
-    },
-
-    multiplicar: function multiplicarNumeros(n1, n2) {
-      return parseInt(n1) * parseInt(n2);
-    },
-
-    dividir: function dividirNumeros(n1, n2) {
-      return parseInt(n1) / parseInt(n2);
-    },
-  };
-
-  var operacion;
-  let history = []
-  let datos = {
-    numeros: [],
-    operacion: "",
-    resultado: 0,
-  }
-
-  switch (op) {
-    case "sumar":
-      var operando1 = document.getElementById("resultado").value;
-      document.getElementById("resultado").value = operando1 + "+";
-      operacion = document.getElementById("resultado").value;
-      document.getElementById("memoria").value = "suma";
-      break;
-    case "restar":
-      var operando1 = document.getElementById("resultado").value;
-      document.getElementById("resultado").value = operando1 + "-";
-      operacion = document.getElementById("resultado").value;
-      document.getElementById("memoria").value = "resta";
-      break;
-    case "multiplicar":
-      var operando1 = document.getElementById("resultado").value;
-      document.getElementById("resultado").value = operando1 + "*";
-      operacion = document.getElementById("resultado").value;
-      document.getElementById("memoria").value = "multiplicacion";
-      break;
-    case "dividir":
-      var operando1 = document.getElementById("resultado").value;
-      document.getElementById("resultado").value = operando1 + "/";
-      operacion = document.getElementById("resultado").value;
-      document.getElementById("memoria").value = "division";
-      break;
-
-    case "igual":
-      operacion = document.getElementById("resultado").value;
-
-      var memoriaop = document.getElementById("memoria").value;
-
-      switch (memoriaop) {
-        case "suma":
-          var operandos = operacion.split("+");
-          var resultado = ops.sumar(operandos[0], operandos[1]);
-          datos.numeros.push(operandos[0], operandos[1])
-          datos.operacion = memoriaop
-          datos.resultado = resultado
-          history.push(datos)
-          datos = {}
-
-          history.forEach(el =>{
-            console.log(el);
-          })
-          document.getElementById("resultado").value = resultado;
-          break;
-        case "resta":
-          var operandos = operacion.split("-");
-          var resultado = ops.restar(operandos[0], operandos[1]);
-          document.getElementById("resultado").value = resultado;
-          break;
-        case "multiplicacion":
-          var operandos = operacion.split("*");
-          var resultado = ops.multiplicar(operandos[0], operandos[1]);
-          document.getElementById("resultado").value = resultado;
-          break;
-        case "division":
-          var operandos = operacion.split("/");
-          var resultado = ops.dividir(operandos[0], operandos[1]);
-          document.getElementById("resultado").value = resultado;
-          break;
+function evaluar(){
+    cadena=document.getElementById('resultado').value;
+    
+    division=cadena.split('÷');
+    // alert(cadena);
+    adiv=division[0];
+    mult1=adiv.split("x");
+    amult=1;
+    for(i=0; i<mult1.length; i++){
+      
+      sumar=mult1[i].split('+');
+      
+      restar=sumar[0].split('-');
+      res1=restar[0];
+      // alert(res1);
+      for(j=1; j<restar.length; j++){
+        res1=res1-restar[j];
       }
-      break;
-    case "limpiar":
-        document.getElementById("resultado").value = 0
-        break;
+      sum1=res1;
+      for(j=1; j<sumar.length; j++){
+          restar=sumar[j].split('-');
+          res1=restar[0];
+          for(k=1; k<restar.length; k++){
+            res1=res1-restar[k];
+          }
+        sum1=sum1*1+res1*1;
+      }
+      amult=amult*sum1;
+      // alert(amult);
+    }
+    // alert(amult);
+    adiv=amult;
+    for(i=1; i<division.length; i++){
+      adivn=division[i];
+      multn=adivn.split("x");
+      sumar=multn[0].split('+');
+      
+      restar=sumar[0].split('-');
+      res1=restar[0];
+      // alert(res1);
+      for(j=1; j<restar.length; j++){
+        res1=res1-restar[j];
+      }
+      sumn=res1;
+      for(h=1; h<sumar.length; h++){
+          restar=sumar[h].split('-');
+          res1=restar[0];
+          for(k=1; k<restar.length; k++){
+            res1=res1-restar[k];
+          }
+        sumn=sumn+res1*1;
+      }
+      adiv=adiv/sumn;
+      for(j=1; j<multn.length; j++){
+        
+        sumar=multn[i].split('+');
+        restar=sumar[0].split('-');
+          res1=restar[0];
+          // alert(res1);
+          for(k=1; k<restar.length; k++){
+            res1=res1-restar[k];
+          }
+          sumn=res1;
+        
+        for(h=1; h<sumar.length; h++){
+            restar=sumar[h].split('-');
+            res1=restar[0];
+            for(k=1; k<restar.length; k++){
+              res1=res1-restar[k];
+            }
+          sumn=sumn*1+res1*1;
+        }
+        adiv=adiv*sumn;
+      }
+      
+      
+    }
+
+    document.getElementById('resultado').value=adiv;
+    Historial.push(adiv)
+    console.log(Historial)
+    document.getElementById('historial').value=Historial;
+
+
+    
   }
-}
